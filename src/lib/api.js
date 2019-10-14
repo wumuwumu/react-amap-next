@@ -1,19 +1,19 @@
-import forOwn from 'lodash/forOwn';
-import isEqual from 'lodash/isEqual';
-import isNil from 'lodash/isNil';
-import isEmpty from 'lodash/isEmpty';
+import forOwn from "lodash/forOwn";
+import isEqual from "lodash/isEqual";
+import isNil from "lodash/isNil";
+import isEmpty from "lodash/isEmpty";
 //import loadjscssfile from './loadScript';
-import APILoader from './APILoader'
+import APILoader from "./APILoader";
 
-const xdebug = console.log;
-// const xdebug = () => {};
+// const xdebug = console.log;
+const xdebug = () => {};
 
-export const loadApi = (key = '0325e3d6d69cd56de4980b4f28906fd8') => {
+export const loadApi = (key = "0325e3d6d69cd56de4980b4f28906fd8") => {
   return new APILoader({
     key,
     useAMapUI: true,
-    version: '1.4.7',
-    protocol: 'https'
+    version: "1.4.7",
+    protocol: "https"
   }).load();
 };
 export const loadMap = key => {
@@ -26,15 +26,14 @@ export const loadMap = key => {
         if (window.AMap) {
           resolve(window.AMap);
         } else {
-          reject(new Error('window.AMap不存在!'));
+          reject(new Error("window.AMap不存在!"));
         }
       })
       .catch(error => {
-        reject(new Error('加载地图错误!' + error.message));
+        reject(new Error("加载地图错误!" + error.message));
       });
   });
 };
-
 
 // export const loadApiV1 = async (key = '0325e3d6d69cd56de4980b4f28906fd8') => {
 //   return await loadjscssfile(
@@ -77,7 +76,7 @@ export const loadPlugin = name => {
       });
       //是否有加载失败的情况,如果加载失败,怎么reject?
     } else {
-      reject(new Error('地图还未加载!'));
+      reject(new Error("地图还未加载!"));
     }
   });
 };
@@ -92,11 +91,11 @@ const commonUpdate = (
   oldOptions,
   oldEvents,
   operators,
-  __func__ = 'commonUpdate'
+  __func__ = "commonUpdate"
 ) => {
   // const __func__ = 'commonUpdate';
   if (!entity) {
-    xdebug(__func__, 'fail! no entity!');
+    xdebug(__func__, "fail! no entity!");
     return false;
   }
 
@@ -108,8 +107,7 @@ const commonUpdate = (
         // 找到改变的旧属性,用新属性取代
         let newValue = newOptions && newOptions[key];
         if (!isEqual(newValue, value)) {
-          if (!(isNil(newValue) && isNil(value)))
-            props[key] = newValue;
+          if (!(isNil(newValue) && isNil(value))) props[key] = newValue;
         }
       });
     newOptions &&
@@ -129,8 +127,7 @@ const commonUpdate = (
         // 找到改变的旧属性,用新属性取代
         let newValue = newEvents && newEvents[key];
         if (!isEqual(newValue, value)) {
-          if (!(isNil(newValue) && isNil(value)))
-            events[key] = newValue;
+          if (!(isNil(newValue) && isNil(value))) events[key] = newValue;
         }
       });
     newEvents &&
@@ -174,11 +171,11 @@ const commonUpdate = (
         func(value);
       } else {
         // ignore properties can not set.
-        xdebug(__func__, 'warning! no setter! can not update ' + key);
+        xdebug(__func__, "warning! no setter! can not update " + key);
       }
     } else {
       // key removed, not support!
-      xdebug(__func__, 'warning! remove prop not support! key=' + key);
+      xdebug(__func__, "warning! remove prop not support! key=" + key);
     }
   });
   forOwn(events, (value, key) => {
@@ -192,10 +189,11 @@ const commonUpdate = (
   });
   if (!isEmpty(props) || !isEmpty(events)) {
     xdebug(
-      __func__, 'update:',
+      __func__,
+      "update:",
       entity,
       props,
-      events,
+      events
       // newOptions,
       // newEvents,
       // oldOptions,
@@ -209,21 +207,21 @@ const commonUpdate = (
 // Map
 ////////////////////////////////////////////////////////////
 export const createMap = (dom, options, events) => {
-  const __func__ = 'createMap';
+  const __func__ = "createMap";
   if (!window.AMap) {
-    xdebug(__func__, 'fail! no window.AMap!');
+    xdebug(__func__, "fail! no window.AMap!");
     return null;
   }
   if (!dom) {
-    xdebug(__func__, 'fail! no dom!');
+    xdebug(__func__, "fail! no dom!");
     return null;
   }
   let map = new window.AMap.Map(dom, { ...(options || {}) });
   forOwn(events, (value, key) => {
-    xdebug(__func__, 'event on ' + key);
+    xdebug(__func__, "event on " + key);
     map.on(key, value);
   });
-  xdebug(__func__, 'ok!');
+  xdebug(__func__, "ok!");
   return map;
 };
 
@@ -270,15 +268,15 @@ export const updateMap = (
     skyColor: null,
     preloadMode: null
   };
-  return commonUpdate (
+  return commonUpdate(
     map,
     newOptions,
     newEvents,
     oldOptions,
     oldEvents,
     operators,
-    'updateMap'
-  )
+    "updateMap"
+  );
 };
 
 ////////////////////////////////////////////////////////////
@@ -292,17 +290,17 @@ export const updateMap = (
  * @param {*} events
  */
 export const createMarker = (options, events) => {
-  const __func__ = 'createMarker';
+  const __func__ = "createMarker";
   if (!window.AMap) {
-    xdebug(__func__, 'fail! no window.AMap!');
+    xdebug(__func__, "fail! no window.AMap!");
     return null;
   }
   if (!options) {
-    xdebug(__func__, 'fail! no options!');
+    xdebug(__func__, "fail! no options!");
     return null;
   }
   if (!options.map) {
-    xdebug(__func__, 'fail! no options.map!');
+    xdebug(__func__, "fail! no options.map!");
     return null;
   }
   // let marker = new AMap.Marker({
@@ -314,7 +312,7 @@ export const createMarker = (options, events) => {
   forOwn(events, (value, key) => {
     entity.on(key, value);
   });
-  xdebug(__func__, 'ok!');
+  xdebug(__func__, "ok!");
   return entity;
 };
 
@@ -329,7 +327,9 @@ export const updateMarker = (
     map: v => entity.setMap(v),
     position: v => entity.setPosition(v),
     offset: v => entity.setOffset(v),
-    icon: v => { setTimeout(()=> entity.setIcon(v),0); }, // 这里有一个bug,在某些时候页面更改icon时,界面上并不生效.
+    icon: v => {
+      setTimeout(() => entity.setIcon(v), 0);
+    }, // 这里有一个bug,在某些时候页面更改icon时,界面上并不生效.
     content: v => entity.setContent(v),
     topWhenClick: null,
     bubble: null,
@@ -349,15 +349,15 @@ export const updateMarker = (
     label: v => entity.setLabel(v)
   };
 
-  return commonUpdate (
+  return commonUpdate(
     entity,
     newOptions,
     newEvents,
     oldOptions,
     oldEvents,
     operators,
-    'updateMarker'
-  )
+    "updateMarker"
+  );
 };
 
 ////////////////////////////////////////////////////////////
@@ -371,18 +371,24 @@ export const updateMarker = (
  * @param {*} events
  */
 export const createTraffic = (options, events) => {
-  const __func__ = 'createTraffic';
+  const __func__ = "createTraffic";
   if (!window.AMap || !options || !options.map) {
-    xdebug(__func__, 'fail! parameters!', 'window.AMap:'+!!window.AMap, 'options:'+!!options, 'options.map:'+!!(options&&options.map));
+    xdebug(
+      __func__,
+      "fail! parameters!",
+      "window.AMap:" + !!window.AMap,
+      "options:" + !!options,
+      "options.map:" + !!(options && options.map)
+    );
     return null;
   }
-  let {map, ...restOpts} = options;
+  let { map, ...restOpts } = options;
   let entity = new window.AMap.TileLayer.Traffic(restOpts);
   forOwn(events, (value, key) => {
     entity.on(key, value);
   });
   entity.setMap(map);
-  xdebug(__func__, 'ok!');
+  xdebug(__func__, "ok!");
   return entity;
 };
 
@@ -401,18 +407,18 @@ export const updateTraffic = (
     detectRetina: null,
     autoRefresh: null,
     interval: null,
-    tileUrl: v => entity.setTileUrl(v), // not in options.
+    tileUrl: v => entity.setTileUrl(v) // not in options.
   };
 
-  return commonUpdate (
+  return commonUpdate(
     entity,
     newOptions,
     newEvents,
     oldOptions,
     oldEvents,
     operators,
-    'updateTraffic'
-  )
+    "updateTraffic"
+  );
 };
 
 ////////////////////////////////////////////////////////////
@@ -426,18 +432,27 @@ export const updateTraffic = (
  * @param {*} events
  */
 export const createMassMarks = (options, events) => {
-  const __func__ = 'createMassMarks';
+  const __func__ = "createMassMarks";
   if (!window.AMap || !options || !options.map) {
-    xdebug(__func__, 'fail! parameters!', 'window.AMap:'+!!window.AMap, 'options:'+!!options, 'options.map:'+!!(options&&options.map));
+    xdebug(
+      __func__,
+      "fail! parameters!",
+      "window.AMap:" + !!window.AMap,
+      "options:" + !!options,
+      "options.map:" + !!(options && options.map)
+    );
     return null;
   }
-  let {map, data, style, ...restOpts} = options;
-  let entity = new window.AMap.MassMarks(data||[], {...restOpts, style: style||[]});
+  let { map, data, style, ...restOpts } = options;
+  let entity = new window.AMap.MassMarks(data || [], {
+    ...restOpts,
+    style: style || []
+  });
   forOwn(events, (value, key) => {
     entity.on(key, value);
   });
   entity.setMap(map);
-  xdebug(__func__, 'ok!', map, 'layers:', map.getLayers());
+  xdebug(__func__, "ok!", map, "layers:", map.getLayers());
   return entity;
 };
 
@@ -456,24 +471,30 @@ export const updateMassMarks = (
     alwaysRender: null,
     style: v => entity.setStyle(v),
     map: v => {
-      xdebug('updateMassMarks', 'setMap', v, 'layers:', (v && v.getLayers()));
-      entity.setMap(v)
+      xdebug("updateMassMarks", "setMap", v, "layers:", v && v.getLayers());
+      entity.setMap(v);
     },
-    data: v=> {
+    data: v => {
       entity.setData(v);
     }
   };
-  xdebug('updateMassMarks', 'mapOld:', (oldOptions && oldOptions.map && oldOptions.map.getLayers()), 'mapNew:', (newOptions && newOptions.map && newOptions.map.getLayers()));
+  xdebug(
+    "updateMassMarks",
+    "mapOld:",
+    oldOptions && oldOptions.map && oldOptions.map.getLayers(),
+    "mapNew:",
+    newOptions && newOptions.map && newOptions.map.getLayers()
+  );
 
-  return commonUpdate (
+  return commonUpdate(
     entity,
     newOptions,
     newEvents,
     oldOptions,
     oldEvents,
     operators,
-    'updateMassMarks'
-  )
+    "updateMassMarks"
+  );
 };
 
 ////////////////////////////////////////////////////////////
@@ -487,16 +508,22 @@ export const updateMassMarks = (
  * @param {*} events
  */
 export const createPolygon = (options, events) => {
-  const __func__ = 'createPolygon';
+  const __func__ = "createPolygon";
   if (!window.AMap || !options || !options.map) {
-    xdebug(__func__, 'fail! parameters!', 'window.AMap:'+!!window.AMap, 'options:'+!!options, 'options.map:'+!!(options&&options.map));
+    xdebug(
+      __func__,
+      "fail! parameters!",
+      "window.AMap:" + !!window.AMap,
+      "options:" + !!options,
+      "options.map:" + !!(options && options.map)
+    );
     return null;
   }
   let entity = new window.AMap.Polygon(options);
   forOwn(events, (value, key) => {
     entity.on(key, value);
   });
-  xdebug(__func__, 'ok!');
+  xdebug(__func__, "ok!");
   return entity;
 };
 
@@ -525,15 +552,15 @@ export const updatePolygon = (
     options: v => entity.setOptions(v)
   };
 
-  return commonUpdate (
+  return commonUpdate(
     entity,
     newOptions,
     newEvents,
     oldOptions,
     oldEvents,
     operators,
-    'updatePolygon'
-  )
+    "updatePolygon"
+  );
 };
 
 ////////////////////////////////////////////////////////////
@@ -547,16 +574,22 @@ export const updatePolygon = (
  * @param {*} events
  */
 export const createCircle = (options, events) => {
-  const __func__ = 'createCircle';
+  const __func__ = "createCircle";
   if (!window.AMap || !options || !options.map) {
-    xdebug(__func__, 'fail! parameters!', 'window.AMap:'+!!window.AMap, 'options:'+!!options, 'options.map:'+!!(options&&options.map));
+    xdebug(
+      __func__,
+      "fail! parameters!",
+      "window.AMap:" + !!window.AMap,
+      "options:" + !!options,
+      "options.map:" + !!(options && options.map)
+    );
     return null;
   }
   let entity = new window.AMap.Circle(options);
   forOwn(events, (value, key) => {
     entity.on(key, value);
   });
-  xdebug(__func__, 'ok!');
+  xdebug(__func__, "ok!");
   return entity;
 };
 
@@ -585,15 +618,15 @@ export const updateCircle = (
     options: v => entity.setOptions(v)
   };
 
-  return commonUpdate (
+  return commonUpdate(
     entity,
     newOptions,
     newEvents,
     oldOptions,
     oldEvents,
     operators,
-    'updateCircle'
-  )
+    "updateCircle"
+  );
 };
 
 ////////////////////////////////////////////////////////////
@@ -607,16 +640,22 @@ export const updateCircle = (
  * @param {*} events
  */
 export const createPolyline = (options, events) => {
-  const __func__ = 'createPolyline';
+  const __func__ = "createPolyline";
   if (!window.AMap || !options || !options.map) {
-    xdebug(__func__, 'fail! parameters!', 'window.AMap:'+!!window.AMap, 'options:'+!!options, 'options.map:'+!!(options&&options.map));
+    xdebug(
+      __func__,
+      "fail! parameters!",
+      "window.AMap:" + !!window.AMap,
+      "options:" + !!options,
+      "options.map:" + !!(options && options.map)
+    );
     return null;
   }
   let entity = new window.AMap.Polyline(options);
   forOwn(events, (value, key) => {
     entity.on(key, value);
   });
-  xdebug(__func__, 'ok!');
+  xdebug(__func__, "ok!");
   return entity;
 };
 
@@ -650,15 +689,15 @@ export const updatePolyline = (
     options: v => entity.setOptions(v)
   };
 
-  return commonUpdate (
+  return commonUpdate(
     entity,
     newOptions,
     newEvents,
     oldOptions,
     oldEvents,
     operators,
-    'updatePolyline'
-  )
+    "updatePolyline"
+  );
 };
 
 ////////////////////////////////////////////////////////////
@@ -672,16 +711,22 @@ export const updatePolyline = (
  * @param {*} events
  */
 export const createInfoWindow = (options, events) => {
-  const __func__ = 'createInfoWindow';
+  const __func__ = "createInfoWindow";
   if (!window.AMap || !options || !options.map) {
-    xdebug(__func__, 'fail! parameters!', 'window.AMap:'+!!window.AMap, 'options:'+!!options, 'options.map:'+!!(options&&options.map));
+    xdebug(
+      __func__,
+      "fail! parameters!",
+      "window.AMap:" + !!window.AMap,
+      "options:" + !!options,
+      "options.map:" + !!(options && options.map)
+    );
     return null;
   }
   let entity = new window.AMap.InfoWindow(options);
   forOwn(events, (value, key) => {
     entity.on(key, value);
   });
-  xdebug(__func__, 'ok!');
+  xdebug(__func__, "ok!");
   return entity;
 };
 
@@ -700,17 +745,58 @@ export const updateInfoWindow = (
     size: v => entity.setSize(v),
     offset: null,
     position: v => entity.setPosition(v),
-    showShadow: null,
+    showShadow: null
   };
 
-  return commonUpdate (
+  return commonUpdate(
     entity,
     newOptions,
     newEvents,
     oldOptions,
     oldEvents,
     operators,
-    'updateInfoWindow'
-  )
+    "updateInfoWindow"
+  );
 };
 
+////////////////////////////////////////////////////////////
+// Geolocation
+////////////////////////////////////////////////////////////
+
+export const getLocation = (options, events) => {
+  xdebug("准备获取地理位置");
+  /***************************************
+  由于Chrome、IOS10等已不再支持非安全域的浏览器定位请求，为保证定位成功率和精度，请尽快升级您的站点到HTTPS。
+  ***************************************/
+  let map = options.map;
+  if (!map) {
+    return false;
+  }
+  let geolocation;
+
+  const defaultOptions = {
+    enableHighAccuracy: true, //是否使用高精度定位，默认:true
+    timeout: 10000, //超过10秒后停止定位，默认：无穷大
+    buttonOffset: new window.AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+    zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+    buttonPosition: "RB"
+  };
+
+  let opts = { ...defaultOptions, ...options };
+  xdebug("准备加载定位插件");
+
+  map.plugin("AMap.Geolocation", function() {
+    xdebug("加载定位插件成功");
+
+    geolocation = new window.AMap.Geolocation(opts);
+    map.addControl(geolocation);
+    geolocation.getCurrentPosition();
+    if (events.onComplete) {
+      window.AMap.event.addListener(geolocation, "complete", events.onComplete); //返回定位信息
+    }
+    if (events.onError) {
+      window.AMap.event.addListener(geolocation, "error", events.onError); //返回定位出错信息
+    }
+  });
+  return true;
+};
