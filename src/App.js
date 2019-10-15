@@ -4,8 +4,7 @@ import "./App.css";
 
 import loadJs from "./lib/loadScript";
 import { loadMap } from "./lib/api";
-import Map from "./lib/Map";
-import Marker from "./lib/Marker";
+import {Map,Marker} from './lib'
 import MassMarks from "./lib/MassMarks";
 import LayerTraffic from "./lib/LayerTraffic";
 import Polygon from "./lib/Polygon";
