@@ -1,7 +1,7 @@
 /**
  * see: http://www.javascriptkit.com/javatutors/loadjavascriptcss.shtml
  */
-import indexOf from 'lodash/indexOf';
+import { indexOf } from "lodash-es";
 
 let gFileList = []; //list of files already added
 const loadjscssfile = (filename, filetype) => {

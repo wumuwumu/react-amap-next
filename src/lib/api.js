@@ -1,7 +1,4 @@
-import forOwn from "lodash/forOwn";
-import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
-import isEmpty from "lodash/isEmpty";
+import {isEmpty,isNil,isEqual,forOwn} from "lodash-es"
 //import loadjscssfile from './loadScript';
 import APILoader from "./APILoader";
 
