@@ -1,7 +1,4 @@
-import forOwn from 'lodash/forOwn';
-import isEqual from 'lodash/isEqual';
-import isNil from 'lodash/isNil';
-import isUndefined from 'lodash/isUndefined';
+import { isUndefined, isNil, isEqual, forOwn } from "lodash-es";
 
 // M: Mandatory,必选
 // api调用限流说明: https://lbs.amap.com/api/webservice/guide/tools/flowlevel

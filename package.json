@@ -9,6 +9,7 @@
     "amap",
     "高德地图"
   ],
+  "main":"lib/index.js",
   "homepage": "https://github.com/windsome/react-amap-next",
   "author": "windsome.feng <36081189@qq.com> (https://github.com/windsome/)",
   "scripts": {
@@ -20,7 +21,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
-    "lodash": "^4.17.11",
+    "lodash-es": "^4.17.15",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "2.0.5"

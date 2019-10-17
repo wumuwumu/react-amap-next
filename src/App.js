@@ -17,8 +17,8 @@ class MarkerTest extends Component {
   constructor() {
     super();
     this.state = {};
-    this._setMapRefer = this._setMapRefer.bind(this);
-    this._setMarkerRefer = this._setMarkerRefer.bind(this);
+    // this._setMapRefer = this._setMapRefer.bind(this);
+    // this._setMarkerRefer = this._setMarkerRefer.bind(this);
   }
 
   componentDidMount() {
@@ -26,16 +26,7 @@ class MarkerTest extends Component {
       this.setState({ AMap });
     });
   }
-  _setMapRefer(refer) {
-    this.mapRefer = refer;
-    window.$map = this.mapRefer;
-    console.log("_setMapRefer:", this.mapRefer, this.markerRefer);
-  }
-  _setMarkerRefer(refer) {
-    this.markerRefer = refer;
-    window.$marker = this.markerRefer;
-    console.log("_setMarkerRefer:", this.mapRefer, this.markerRefer);
-  }
+ 
 
   onComplete(data) {
     console.log("定位成功回调：", data);
@@ -47,8 +38,8 @@ class MarkerTest extends Component {
 
   render() {
     let center = [116.39, 39.9];
-    window.$map = this.mapRefer;
-    window.$marker = this.markerRefer;
+    // window.$map = this.mapRefer;
+    // window.$marker = this.markerRefer;
     console.log("render:", this.mapRefer, this.markerRefer);
     let markerIcon = "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png";
     switch (this.state.markerIndex) {
@@ -76,7 +67,7 @@ class MarkerTest extends Component {
             </span>
           </div>
           <Map
-            refer={this._setMapRefer}
+            // refer={this._setMapRefer}
             style={{ width: 1200, height: 800 }}
             options={{ center, zoom: 13 }}
           >

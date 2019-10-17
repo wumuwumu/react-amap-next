@@ -1,12 +1,9 @@
-import forOwn from "lodash/forOwn";
-import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
-import isEmpty from "lodash/isEmpty";
+import {isEmpty,isNil,isEqual,forOwn} from "lodash-es"
 //import loadjscssfile from './loadScript';
 import APILoader from "./APILoader";
 
-// const xdebug = console.log;
-const xdebug = () => {};
+const xdebug = console.log;
+// const xdebug = () => {};
 
 export const loadApi = (key = "0325e3d6d69cd56de4980b4f28906fd8") => {
   return new APILoader({
